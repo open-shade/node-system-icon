@@ -6,7 +6,7 @@
 #include <cwchar>
 #include <memory>
 #include <system_error>
-#include <iostream>
+#include <stdexcept>
 
 #include <algorithm>
 namespace Gdiplus
@@ -230,7 +230,7 @@ std::wstring Utf8ToWide(const std::string& src)
   if (MultiByteToWideChar(CP_UTF8, 0u, src.data(), -1, dest.data(),
                           dest.size()) == 0)
   {
-    throw std::system_error(GetLastError(), std::generic_category(), "Failed to convert string to wide char");
+    throw std::runtime_error("MultiByteToWideChar failed");
   }
 
   return std::wstring{dest.begin(), dest.end()};
